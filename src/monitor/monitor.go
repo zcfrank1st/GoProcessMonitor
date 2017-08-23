@@ -17,5 +17,7 @@ func Monitor() {
         }
         fmt.Println("Monitor now available at port 8864")
         http.Serve(sock, nil)
+
+        // todo send heartbeat by ticker
     }()
 }
