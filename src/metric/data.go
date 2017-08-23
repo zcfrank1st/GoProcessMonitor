@@ -3,7 +3,6 @@ package data
 import (
     "net/http"
     "log"
-    "io/ioutil"
     "encoding/json"
 )
 
@@ -16,10 +15,10 @@ func GetMetricData() map[string]interface{} {
         log.Fatal("request get mem data error!")
     }
 
-    body, err := ioutil.ReadAll(resp.Body)
-
     data := make(map[string]interface{})
-    json.Unmarshal(body, &data)
+    if err := json.NewDecoder(resp.Body).Decode(&data); err == nil {
+        return data
+    }
 
-    return data
+    return nil
 }
